@@ -6,16 +6,15 @@
 # 'jekyll serve'. If you change this file, please restart the server process.
 
 # Site settings
-title: Your awesome title
-email: your-email@domain.com
-description: > # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://yourdomain.com" # the base hostname & protocol for your site
-twitter_username: jekyllrb
-github_username:  jekyll
+title: "My DevOps and SysAdmin Journey" # Your awesome title
+email: andres.felipe.caicedo.ultengo@gmail.com
+description: >
+  Welcome to my DevOps and SysAdmin blog! I share my experiences and insights in streamlining projects, automating workflows,
+  and delivering high-quality code. Join me on this journey as we explore the world of DevOps and System Administration.
+baseurl: "" # The subpath of your site, e.g. /blog
+url: "http://andrescdo.github.io" # The base hostname & protocol for your site
+twitter_username: AndresCdo # Replace with your Twitter username (optional)
+github_username: AndresCdo # Replace with your GitHub username (optional)
 
 # Build settings
 markdown: kramdown
