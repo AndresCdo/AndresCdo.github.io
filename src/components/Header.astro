@@ -1,0 +1,278 @@
+---
+const navItems = [
+  { href: '/',          label: 'Home'     },
+  { href: '/projects/', label: 'Projects' },
+  { href: '/blog/',     label: 'Blog'     },
+  { href: '/about/',    label: 'About'    },
+  { href: '/contact/',  label: 'Contact'  },
+];
+
+const current = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? current === '/' : current.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="wrapper header-inner">
+    <a class="site-title" href="/">
+      <span class="site-title__icon" aria-hidden="true">&lt;AC/&gt;</span>
+      <span class="site-title__text">Andres Caicedo</span>
+    </a>
+
+    <nav class="site-nav" id="nav-menu" aria-label="Main navigation">
+      <ul role="list">
+        {navItems.map(({ href, label }) => (
+          <li>
+            <a
+              href={href}
+              class:list={['nav-link', { 'nav-link--active': isActive(href) }]}
+              aria-current={isActive(href) ? 'page' : undefined}
+            >
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="header-controls">
+      <!-- Theme toggle -->
+      <button
+        id="theme-toggle"
+        class="icon-btn"
+        aria-label="Switch to dark theme"
+        aria-pressed="false"
+        title="Toggle theme"
+      >
+        🌙
+      </button>
+
+      <!-- Hamburger — visible on mobile only -->
+      <button
+        id="nav-toggle"
+        class="icon-btn nav-hamburger"
+        aria-controls="nav-menu"
+        aria-expanded="false"
+        aria-label="Open navigation menu"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  // ── Theme toggle ─────────────────────────────────────────────────────────
+  const THEME_KEY = 'preferred-theme';
+
+  function saveTheme(t: string) {
+    try { localStorage.setItem(THEME_KEY, t); } catch { /* ignore */ }
+  }
+
+  function syncButton(theme: string) {
+    const btn = document.getElementById('theme-toggle') as HTMLButtonElement | null;
+    if (!btn) return;
+    const dark = theme === 'dark';
+    btn.textContent = dark ? '☀️' : '🌙';
+    btn.setAttribute('aria-pressed',  String(dark));
+    btn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+  }
+
+  function applyTheme(theme: string) {
+    document.documentElement.setAttribute('data-theme', theme);
+    saveTheme(theme);
+    syncButton(theme);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    syncButton(current);
+
+    document.getElementById('theme-toggle')?.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+    });
+  });
+
+  // ── Mobile nav ───────────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.getElementById('nav-toggle')  as HTMLButtonElement | null;
+    const menu   = document.getElementById('nav-menu')    as HTMLElement | null;
+    if (!toggle || !menu) return;
+
+    function setOpen(open: boolean) {
+      toggle!.setAttribute('aria-expanded', String(open));
+      toggle!.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+      menu!.setAttribute('data-open', String(open));
+    }
+
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!toggle.contains(e.target as Node) && !menu.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    });
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: color-mix(in srgb, var(--color-bg) 90%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-border);
+    height: var(--header-height);
+  }
+
+  .header-inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .site-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .site-title__icon {
+    font-family: var(--font-mono);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--color-brand);
+  }
+
+  .site-title__text {
+    font-weight: 700;
+    font-size: var(--text-base);
+    color: var(--color-heading);
+  }
+  .site-title:hover .site-title__text { color: var(--color-brand); }
+
+  .site-nav ul {
+    display: flex;
+    list-style: none;
+    gap: var(--space-1);
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-link {
+    display: block;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    border-radius: var(--radius-md);
+    transition: color var(--transition), background var(--transition);
+    text-decoration: none;
+  }
+  .nav-link:hover {
+    color: var(--color-heading);
+    background: var(--color-surface);
+    text-decoration: none;
+  }
+  .nav-link--active {
+    color: var(--color-brand);
+    background: var(--color-brand-light);
+    font-weight: 600;
+  }
+
+  .header-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--color-text);
+    transition: background var(--transition), border-color var(--transition);
+  }
+  .icon-btn:hover {
+    background: var(--color-surface);
+    border-color: var(--color-text-muted);
+  }
+  .icon-btn:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
+
+  /* Hamburger lines */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    padding: var(--space-2);
+  }
+  .hamburger-line {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: var(--color-text);
+    border-radius: 2px;
+    transition: transform var(--transition), opacity var(--transition);
+  }
+
+  /* Mobile styles */
+  @media (max-width: 640px) {
+    .nav-hamburger { display: flex; }
+
+    .site-nav {
+      position: absolute;
+      top: var(--header-height);
+      left: 0;
+      right: 0;
+      background: var(--color-bg-alt);
+      border-bottom: 1px solid var(--color-border);
+      box-shadow: var(--shadow-lg);
+      padding: var(--space-4);
+      /* Hidden state */
+      display: none;
+    }
+
+    .site-nav[data-open='true'] {
+      display: block;
+    }
+
+    .site-nav ul {
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .nav-link {
+      font-size: var(--text-base);
+      padding: var(--space-3) var(--space-4);
+    }
+  }
+</style>

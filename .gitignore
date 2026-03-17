@@ -1,3 +1,32 @@
-_site
-.sass-cache
+# ── Astro build output ─────────────────────────────────────────────────────
+dist/
+.astro/
+
+# ── Node.js ────────────────────────────────────────────────────────────────
+node_modules/
+
+# ── Environment variables ──────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Editor / OS ────────────────────────────────────────────────────────────
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.tmp
+*~
+
+# ── Logs ───────────────────────────────────────────────────────────────────
+*.log
+npm-debug.log*
+
+# ── Legacy Jekyll artefacts (kept until cleanup commit) ────────────────────
+_site/
 .jekyll-metadata
+.jekyll-cache/
+.sass-cache/
+.rouge-cache/
+vendor/
+.bundle/

@@ -1,0 +1,162 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { skills } from '../data/skills';
+---
+
+<BaseLayout
+  title="About Me"
+  description="Andres Caicedo is a DevOps Engineer and System Administrator specialising in Kubernetes, GCP, Terraform, CI/CD, and infrastructure automation."
+>
+  <div class="wrapper page-content">
+
+    <!-- Hero -->
+    <section class="about-hero">
+      <div class="about-hero-text">
+        <h1>Hi, I'm Andres Caicedo <span aria-label="wave">👋</span></h1>
+        <p class="about-tagline">DevOps Engineer · SysAdmin · Open-Source Enthusiast</p>
+        <p class="about-bio">
+          I design, build, and operate infrastructure that ships software reliably at scale.
+          My focus is eliminating toil through automation — whether that means writing a Terraform module,
+          tuning a Kubernetes cluster, or wiring up a CI/CD pipeline from scratch.
+        </p>
+        <div class="about-cta">
+          <a class="btn btn--primary" href="/projects/">See My Projects</a>
+          <a class="btn btn--outline" href="/contact/">Get in Touch</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- What I do -->
+    <section class="about-section">
+      <h2>What I Do</h2>
+      <p>
+        I work at the intersection of software engineering and operations — building the platforms and
+        pipelines that let development teams move fast without breaking things.
+        I care deeply about observability, security, and developer experience.
+      </p>
+      <p>
+        Outside of work I contribute to open source, write on this blog, and explore the latest
+        trends in cloud-native technology.
+      </p>
+    </section>
+
+    <!-- Skills grid -->
+    <section class="about-section">
+      <h2>Skills &amp; Technologies</h2>
+      <div class="skills-grid">
+        {skills.map(group => (
+          <div class="skill-group">
+            <h3 class="skill-group-title">
+              <span aria-hidden="true">{group.icon}</span> {group.category}
+            </h3>
+            <ul class="tech-stack">
+              {group.items.map(item => <li class="tech-badge">{item}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Connect -->
+    <section class="about-section">
+      <h2>Connect</h2>
+      <ul class="connect-list">
+        <li>
+          <a href="https://github.com/AndresCdo" target="_blank" rel="noopener noreferrer">
+            💻 GitHub — github.com/AndresCdo
+          </a>
+        </li>
+        <li>
+          <a href="https://www.linkedin.com/in/andres-caicedo-58888720a/" target="_blank" rel="noopener noreferrer">
+            🔗 LinkedIn — andres-caicedo
+          </a>
+        </li>
+        <li>
+          <a href="https://twitter.com/AndresCdo" target="_blank" rel="noopener noreferrer">
+            🐦 Twitter / X — @AndresCdo
+          </a>
+        </li>
+      </ul>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<style>
+  .page-content { padding-block: var(--space-16); }
+
+  .about-hero {
+    margin-bottom: var(--space-16);
+    padding-bottom: var(--space-16);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .about-hero h1 { margin-bottom: var(--space-3); }
+
+  .about-tagline {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-brand);
+    margin-bottom: var(--space-5);
+  }
+
+  .about-bio {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    max-width: 62ch;
+    line-height: var(--leading-normal);
+    margin-bottom: var(--space-8);
+  }
+
+  .about-cta {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .about-section {
+    margin-bottom: var(--space-16);
+  }
+  .about-section h2 {
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .about-section p { max-width: 70ch; }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--space-6);
+    margin-top: var(--space-6);
+  }
+
+  .skill-group {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+  }
+
+  .skill-group-title {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    margin-bottom: var(--space-4);
+    color: var(--color-heading);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .connect-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+  .connect-list a {
+    font-size: var(--text-base);
+    font-weight: 500;
+  }
+</style>

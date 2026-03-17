@@ -1,0 +1,114 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { featuredProjects, otherProjects } from '../data/projects';
+---
+
+<BaseLayout
+  title="Projects"
+  description="Open-source projects and tools built by Andres Caicedo — covering DevOps, infrastructure automation, and cloud engineering."
+>
+  <div class="wrapper page-content">
+    <header class="page-header">
+      <h1>Projects</h1>
+      <p class="page-lead">
+        A collection of open-source projects I've built or contributed to.
+        Each one reflects a real problem I've solved in production.
+      </p>
+    </header>
+
+    <section aria-labelledby="featured-heading">
+      <h2 id="featured-heading" class="projects-section-title">Featured</h2>
+      <div class="projects-grid">
+        {featuredProjects.map(project => (
+          <article class="project-card project-card--featured">
+            <div class="project-card__header">
+              <span class="project-card__category">{project.category}</span>
+              <h3 class="project-card__title">
+                <a href={project.url} target="_blank" rel="noopener noreferrer">
+                  {project.title}
+                </a>
+              </h3>
+            </div>
+            <p class="project-card__description">{project.description}</p>
+            <footer class="project-card__footer">
+              <ul class="tech-stack" aria-label="Technologies used">
+                {project.tech.map(t => <li class="tech-badge">{t}</li>)}
+              </ul>
+              <a
+                class="btn btn--outline btn--sm"
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`View ${project.title} on GitHub`}
+              >
+                View on GitHub →
+              </a>
+            </footer>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section aria-labelledby="more-heading" class="more-projects">
+      <h2 id="more-heading" class="projects-section-title">More Projects</h2>
+      <div class="projects-grid">
+        {otherProjects.map(project => (
+          <article class="project-card">
+            <div class="project-card__header">
+              <span class="project-card__category">{project.category}</span>
+              <h3 class="project-card__title">
+                <a href={project.url} target="_blank" rel="noopener noreferrer">
+                  {project.title}
+                </a>
+              </h3>
+            </div>
+            <p class="project-card__description">{project.description}</p>
+            <footer class="project-card__footer">
+              <ul class="tech-stack" aria-label="Technologies used">
+                {project.tech.map(t => <li class="tech-badge">{t}</li>)}
+              </ul>
+              <a
+                class="btn btn--outline btn--sm"
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`View ${project.title} on GitHub`}
+              >
+                View on GitHub →
+              </a>
+            </footer>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-content { padding-block: var(--space-16); }
+
+  .page-header {
+    margin-bottom: var(--space-12);
+  }
+  .page-lead {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    max-width: 60ch;
+    margin-top: var(--space-4);
+  }
+
+  .projects-section-title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--color-text-muted);
+    margin-bottom: 0;
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .more-projects {
+    margin-top: var(--space-16);
+  }
+</style>

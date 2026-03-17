@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="404 — Page Not Found"
+  description="The page you're looking for doesn't exist. Let's get you back on track."
+  noindex={true}
+>
+  <div class="wrapper">
+    <div class="not-found">
+      <p class="error-code" aria-hidden="true">404</p>
+      <h1 class="error-heading">Page Not Found</h1>
+      <p class="error-message">
+        Looks like this pipeline failed — the page you're looking for doesn't exist,
+        was moved, or has been decommissioned.
+      </p>
+      <nav class="error-nav" aria-label="Recovery navigation">
+        <a class="btn btn--primary" href="/">← Back to Home</a>
+        <a class="btn btn--outline" href="/blog/">Read the Blog</a>
+        <a class="btn btn--outline" href="/projects/">View Projects</a>
+      </nav>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-block: var(--space-24, 6rem);
+    min-height: 60vh;
+  }
+
+  .error-code {
+    font-size: clamp(6rem, 20vw, 10rem);
+    font-weight: 800;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--color-brand), var(--color-brand-light, var(--color-brand)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--space-4);
+    letter-spacing: -0.04em;
+    opacity: 0.85;
+  }
+
+  .error-heading {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-5);
+  }
+
+  .error-message {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    max-width: 50ch;
+    line-height: var(--leading-normal);
+    margin-bottom: var(--space-10);
+  }
+
+  .error-nav {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+</style>
