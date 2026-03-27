@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { skills } from '../data/skills';
+import SystemIcon from '../components/SystemIcon.astro';
 
 const experience = [
   { period: 'Current', title: 'DevOps & Platform Engineer', desc: 'Building and improving CI/CD pipelines, managing Linux infrastructure, and automating workflows.' },
@@ -132,7 +133,7 @@ const experience = [
         {skills.map((group, i) => (
           <div class="skill-group animate-on-scroll" style={`--delay: ${i * 0.08}s`}>
             <h3 class="skill-group-title">
-              <span class="skill-group-icon" aria-hidden="true">{group.icon}</span>
+              <SystemIcon name={group.icon} class="skill-group-icon" size={16} />
               {group.category}
             </h3>
             <ul class="tech-stack">
@@ -407,7 +408,10 @@ const experience = [
   }
 
   .skill-group-icon {
-    font-size: 1.1rem;
+    width: 1rem;
+    height: 1rem;
+    color: var(--color-brand);
+    flex-shrink: 0;
   }
 
   /* ── Connect ── */

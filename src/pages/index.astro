@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { featuredProjects } from '../data/projects';
 import { getCollection } from 'astro:content';
+import SystemIcon from '../components/SystemIcon.astro';
 
 const posts = (await getCollection('blog'))
   .filter(p => !p.data.draft)
@@ -12,14 +13,14 @@ const isExternalUrl = (url: string) => /^https?:\/\//.test(url);
 const isContactSubjectUrl = (url: string) => url.startsWith('/contact/?subject=');
 
 const coreStack = [
-  { name: 'GitHub Actions', icon: '⚙️' },
-  { name: 'Linux',          icon: '🐧' },
-  { name: 'Python',         icon: '🐍' },
-  { name: 'Bash',           icon: '💻' },
-  { name: 'Docker',         icon: '🐳' },
-  { name: 'Kubernetes',     icon: '☸️' },
-  { name: 'Terraform',      icon: '🏗️' },
-  { name: 'GCP',            icon: '☁️' },
+  { name: 'GitHub Actions', icon: 'workflow' },
+  { name: 'Linux',          icon: 'server' },
+  { name: 'Python',         icon: 'code' },
+  { name: 'Bash',           icon: 'terminal' },
+  { name: 'Docker',         icon: 'package' },
+  { name: 'Kubernetes',     icon: 'cluster' },
+  { name: 'Terraform',      icon: 'layers' },
+  { name: 'GCP',            icon: 'cloud' },
 ];
 ---
 
@@ -130,7 +131,7 @@ const coreStack = [
           <ul role="list" class="stack-list">
             {coreStack.map(s => (
               <li class="stack-chip">
-                <span class="stack-chip__icon" aria-hidden="true">{s.icon}</span>
+                <SystemIcon name={s.icon} class="stack-chip__icon" size={15} />
                 <span>{s.name}</span>
               </li>
             ))}
@@ -702,8 +703,10 @@ const coreStack = [
   }
 
   .stack-chip__icon {
-    font-size: 1em;
-    line-height: 1;
+    width: 0.95rem;
+    height: 0.95rem;
+    color: currentColor;
+    flex-shrink: 0;
   }
 
   /* ── Section label ── */
