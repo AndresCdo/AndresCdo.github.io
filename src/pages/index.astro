@@ -8,62 +8,169 @@ const posts = (await getCollection('blog'))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .slice(0, 3);
 
-const coreStack = ['Kubernetes', 'Terraform', 'GCP', 'Ansible', 'Docker', 'GitHub Actions', 'Prometheus', 'Python'];
+const isExternalUrl = (url: string) => /^https?:\/\//.test(url);
+
+const coreStack = [
+  { name: 'GitHub Actions', icon: '⚙️' },
+  { name: 'Linux',          icon: '🐧' },
+  { name: 'Python',         icon: '🐍' },
+  { name: 'Bash',           icon: '💻' },
+  { name: 'Docker',         icon: '🐳' },
+  { name: 'Kubernetes',     icon: '☸️' },
+  { name: 'Terraform',      icon: '🏗️' },
+  { name: 'GCP',            icon: '☁️' },
+];
 ---
 
 <BaseLayout
-  title="Andres Caicedo — DevOps Engineer & SysAdmin"
-  description="Personal site and blog of Andres Caicedo — DevOps Engineer specialising in Kubernetes, GCP, Terraform, and CI/CD automation."
+  title="Andres Caicedo — DevOps & Platform Engineer"
+  description="Personal site and blog of Andres Caicedo — focused on CI/CD pipelines, Linux operations, and automation with Python."
+  schema={{
+    '@type': 'CollectionPage',
+    name: 'Homepage',
+    url: 'https://andrescdo.github.io/',
+    inLanguage: 'en',
+    about: {
+      '@type': 'Person',
+      name: 'Andres Caicedo',
+      jobTitle: 'DevOps & Platform Engineer',
+      knowsAbout: [
+        'CI/CD pipelines',
+        'Linux operations',
+        'Python automation',
+        'Kubernetes',
+        'Terraform',
+      ],
+    },
+  }}
 >
 
   <!-- ── Hero ─────────────────────────────────────────────────────────────── -->
   <section class="hero" aria-label="Introduction">
+    <!-- Animated background elements -->
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-orb hero-orb--1"></div>
+      <div class="hero-orb hero-orb--2"></div>
+      <div class="hero-orb hero-orb--3"></div>
+      <div class="hero-grid"></div>
+    </div>
+
     <div class="wrapper hero-inner">
       <div class="hero-text">
-        <p class="hero-greeting">Hey there, I'm</p>
-        <h1 class="hero-name">Andres Caicedo</h1>
-        <p class="hero-tagline">DevOps Engineer &amp; SysAdmin</p>
-        <p class="hero-description">
-          I build and automate cloud infrastructure, design CI/CD pipelines, and write about
-          DevOps, SRE, and open-source tooling. I care about eliminating toil through automation.
+        <div class="hero-badge-label">
+          <span class="hero-badge-dot" aria-hidden="true"></span>
+          Available for collaboration
+        </div>
+        <h1 class="hero-name">
+          <span class="hero-greeting">Hi, I'm</span>
+          <span class="gradient-text gradient-text--animated">Andres Caicedo</span>
+        </h1>
+        <p class="hero-tagline">
+          <span class="hero-typing" id="hero-typing">DevOps & Platform Engineer</span>
+          <span class="hero-cursor" aria-hidden="true">|</span>
         </p>
+        <p class="hero-description">
+          I build reliable delivery pipelines, improve Linux-based operations, and automate repetitive
+          work with Python. This site documents what I learn, build, and improve over time.
+        </p>
+        <ul class="hero-proof-list" aria-label="Core collaboration areas">
+          <li>CI/CD and release workflow improvements</li>
+          <li>Linux operations and platform reliability</li>
+          <li>Python and Bash automation for repetitive tasks</li>
+        </ul>
         <div class="hero-actions">
-          <a class="btn btn--primary" href="/projects/">View Projects</a>
-          <a class="btn btn--outline" href="/blog/">Read the Blog</a>
+          <a class="btn btn--primary btn--lg hero-cta" href="/projects/">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            View Projects
+          </a>
+          <a class="btn btn--outline btn--lg" href="/blog/">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            Read the Blog
+          </a>
         </div>
       </div>
-      <div class="hero-badge" aria-hidden="true">
-        <span class="hero-badge-inner">&lt;DevOps<br/>Engineer/&gt;</span>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hero-terminal">
+          <div class="hero-terminal__bar">
+            <span class="dot dot--red"></span>
+            <span class="dot dot--yellow"></span>
+            <span class="dot dot--green"></span>
+            <span class="hero-terminal__title">terminal</span>
+          </div>
+          <div class="hero-terminal__body">
+            <code>
+              <span class="t-prompt">$</span> <span class="t-cmd">whoami</span><br/>
+              <span class="t-output">andres-caicedo</span><br/>
+              <span class="t-prompt">$</span> <span class="t-cmd">cat</span> <span class="t-flag">role.txt</span><br/>
+              <span class="t-output">DevOps & Platform Engineer</span><br/>
+              <span class="t-prompt">$</span> <span class="t-cmd">ls</span> <span class="t-flag">skills/</span><br/>
+              <span class="t-output">ci-cd/ linux/ python/ k8s/ terraform/</span><br/>
+              <span class="t-prompt">$</span> <span class="t-cursor">_</span>
+            </code>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator" aria-hidden="true">
+      <div class="scroll-indicator__mouse">
+        <div class="scroll-indicator__dot"></div>
       </div>
     </div>
   </section>
 
   <!-- ── Core stack strip ──────────────────────────────────────────────────── -->
   <section class="stack-strip" aria-label="Core technologies">
-    <div class="wrapper stack-strip-inner">
-      <span class="stack-strip-label">Core Stack</span>
-      <ul role="list" class="stack-list">
-        {coreStack.map(s => <li class="tech-badge">{s}</li>)}
-      </ul>
+    <div class="wrapper">
+      <div class="stack-strip-inner">
+        <span class="stack-strip-label">Core Stack</span>
+        <div class="stack-marquee">
+          <ul role="list" class="stack-list">
+            {coreStack.map(s => (
+              <li class="stack-chip">
+                <span class="stack-chip__icon" aria-hidden="true">{s.icon}</span>
+                <span>{s.name}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- ── Featured Projects ─────────────────────────────────────────────────── -->
-  <section class="home-section" aria-labelledby="projects-heading">
+  <section class="home-section animate-on-scroll" aria-labelledby="projects-heading">
     <div class="wrapper">
       <header class="section-header">
-        <h2 id="projects-heading" class="section-header__title">Featured Projects</h2>
-        <a class="section-header__link" href="/projects/">All projects →</a>
+        <div>
+          <p class="section-label">Portfolio</p>
+          <h2 id="projects-heading" class="section-header__title">Featured Projects</h2>
+        </div>
+        <a class="section-header__link" href="/projects/">
+          All projects
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
       </header>
 
       <div class="projects-grid">
-        {featuredProjects.map(project => (
-          <article class="project-card">
+        {featuredProjects.map((project, i) => (
+          <article class="project-card animate-on-scroll" style={`--delay: ${i * 0.1}s`}>
             <div class="project-card__header">
               <span class="project-card__category">{project.category}</span>
               <h3 class="project-card__title">
-                <a href={project.url} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={project.url}
+                  target={isExternalUrl(project.url) ? '_blank' : undefined}
+                  rel={isExternalUrl(project.url) ? 'noopener noreferrer' : undefined}
+                >
                   {project.title}
+                  {isExternalUrl(project.url) && (
+                    <>
+                      <span class="external-link-indicator" aria-hidden="true">↗</span>
+                      <span class="sr-only"> (opens in new tab)</span>
+                    </>
+                  )}
                 </a>
               </h3>
             </div>
@@ -72,12 +179,16 @@ const coreStack = ['Kubernetes', 'Terraform', 'GCP', 'Ansible', 'Docker', 'GitHu
               <ul class="tech-stack">
                 {project.tech.slice(0, 4).map(t => <li class="tech-badge">{t}</li>)}
               </ul>
-              <a class="btn btn--outline btn--sm"
-                 href={project.url}
-                 target="_blank"
-                 rel="noopener noreferrer">
-                GitHub →
-              </a>
+               <a
+                  class="btn btn--outline btn--sm"
+                  href={project.url}
+                  target={isExternalUrl(project.url) ? '_blank' : undefined}
+                  rel={isExternalUrl(project.url) ? 'noopener noreferrer' : undefined}
+                  aria-label={isExternalUrl(project.url) ? `View project (opens in new tab)` : 'View project'}
+               >
+                 View project
+                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+               </a>
             </footer>
           </article>
         ))}
@@ -86,17 +197,23 @@ const coreStack = ['Kubernetes', 'Terraform', 'GCP', 'Ansible', 'Docker', 'GitHu
   </section>
 
   <!-- ── Latest Posts ──────────────────────────────────────────────────────── -->
-  <section class="home-section home-section--alt" aria-labelledby="posts-heading">
-    <div class="wrapper">
+  <section class="home-section home-section--alt animate-on-scroll" aria-labelledby="posts-heading">
+    <div class="wrapper" style="position: relative; z-index: 1;">
       <header class="section-header">
-        <h2 id="posts-heading" class="section-header__title">Latest Posts</h2>
-        <a class="section-header__link" href="/blog/">All posts →</a>
+        <div>
+          <p class="section-label">Writing</p>
+          <h2 id="posts-heading" class="section-header__title">Latest Posts</h2>
+        </div>
+        <a class="section-header__link" href="/blog/">
+          All posts
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
       </header>
 
       {posts.length > 0 ? (
         <ul class="post-list">
-          {posts.map(post => (
-            <li class="post-item">
+          {posts.map((post, i) => (
+            <li class="post-item animate-on-scroll" style={`--delay: ${i * 0.1}s`}>
               <div class="post-item__meta">
                 <time datetime={post.data.date.toISOString()}>
                   {post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
@@ -107,18 +224,27 @@ const coreStack = ['Kubernetes', 'Terraform', 'GCP', 'Ansible', 'Docker', 'GitHu
                 <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
               </h3>
               <p class="post-item__excerpt">{post.data.description}</p>
+              <a class="post-item__read-more" href={`/blog/${post.slug}/`}>
+                Read article
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
             </li>
           ))}
         </ul>
       ) : (
-        <p class="empty-state">Blog posts coming soon — <a href="/rss.xml">subscribe via RSS</a> to stay updated.</p>
+        <div class="empty-state">
+          <p>Blog posts coming soon — <a href="/rss.xml">subscribe via RSS</a> to stay updated.</p>
+        </div>
       )}
     </div>
   </section>
 
   <!-- ── Newsletter CTA ────────────────────────────────────────────────────── -->
-  <section class="home-section home-section--cta" aria-labelledby="cta-heading">
-    <div class="wrapper cta-block">
+  <section class="home-section home-section--cta animate-on-scroll" aria-labelledby="cta-heading">
+    <div class="wrapper cta-block" style="position: relative; z-index: 1;">
+      <div class="cta-icon" aria-hidden="true">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
       <h2 id="cta-heading">Stay in the loop</h2>
       <p>Get notified about new posts and projects. No spam, unsubscribe anytime.</p>
       <form
@@ -138,181 +264,614 @@ const coreStack = ['Kubernetes', 'Terraform', 'GCP', 'Ansible', 'Docker', 'GitHu
             autocomplete="email"
             aria-required="true"
           />
-          <button type="submit" class="btn btn--primary">Subscribe</button>
+          <button type="submit" class="btn btn--primary btn--lg newsletter-btn">
+            Subscribe
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
         </div>
         <input type="hidden" name="_subject" value="New newsletter subscriber" />
         <input type="text"   name="_gotcha"  style="display:none" tabindex="-1" autocomplete="off" />
       </form>
       <p class="rss-hint">
-        Or <a href="/rss.xml">subscribe via RSS ↗</a>
+        Or <a href="/rss.xml">subscribe via RSS</a>
+      </p>
+      <p class="newsletter-privacy">
+        By subscribing, you agree to receive occasional updates about new posts and projects.
+        No spam, and unsubscribe anytime.
       </p>
     </div>
   </section>
 </BaseLayout>
 
+<script>
+  // ── Typing animation ──────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isLargeViewport = window.matchMedia('(min-width: 1024px)').matches;
+    if (prefersReducedMotion || !isLargeViewport) return;
+
+    const el = document.getElementById('hero-typing');
+    if (!el) return;
+    const typingEl = el;
+
+    const titles = [
+      'DevOps & Platform Engineer',
+      'CI/CD Pipeline Architect',
+      'Linux Operations Expert',
+      'Automation Enthusiast',
+    ];
+    let titleIdx = 0;
+    let charIdx = titles[0].length;
+    let deleting = false;
+
+    function tick() {
+      const current = titles[titleIdx];
+
+      if (deleting) {
+        charIdx--;
+        typingEl.textContent = current.substring(0, charIdx);
+        if (charIdx === 0) {
+          deleting = false;
+          titleIdx = (titleIdx + 1) % titles.length;
+          setTimeout(tick, 400);
+          return;
+        }
+        setTimeout(tick, 30);
+      } else {
+        charIdx++;
+        typingEl.textContent = titles[titleIdx].substring(0, charIdx);
+        if (charIdx === titles[titleIdx].length) {
+          deleting = true;
+          setTimeout(tick, 2500);
+          return;
+        }
+        setTimeout(tick, 60);
+      }
+    }
+
+    // Start after initial display
+    setTimeout(() => {
+      deleting = true;
+      tick();
+    }, 2500);
+  });
+</script>
+
 <style>
   /* ── Hero ── */
   .hero {
-    padding: var(--space-20) 0 var(--space-16);
-    background: radial-gradient(ellipse at 70% 50%, color-mix(in srgb, var(--color-brand) 8%, transparent) 0%, transparent 60%);
+    position: relative;
+    padding: var(--space-24) 0 var(--space-20);
+    overflow: hidden;
+    min-height: min(90vh, 800px);
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(72px);
+    opacity: 0.4;
+  }
+  .hero-orb--1 {
+    width: 500px;
+    height: 500px;
+    background: var(--color-brand);
+    top: -15%;
+    right: -5%;
+    animation: float 8s ease-in-out infinite;
+  }
+  .hero-orb--2 {
+    width: 350px;
+    height: 350px;
+    background: var(--color-accent);
+    bottom: -10%;
+    left: -5%;
+  }
+  .hero-orb--3 {
+    width: 250px;
+    height: 250px;
+    background: var(--color-accent-2);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--color-border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.3;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
   }
 
   .hero-inner {
+    position: relative;
+    z-index: 1;
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr 1fr;
     gap: var(--space-12);
     align-items: center;
   }
 
-  .hero-greeting {
-    font-size: var(--text-lg);
+  /* Hero badge */
+  .hero-badge-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-full);
+    background: var(--color-brand-light);
     color: var(--color-brand);
+    margin-bottom: var(--space-6);
+    animation: fadeInDown 0.6s ease both;
+  }
+  .hero-badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-success);
+    animation: pulse-glow 2s ease infinite;
+    box-shadow: 0 0 8px var(--color-success);
+  }
+
+  .hero-greeting {
+    display: block;
+    font-size: var(--text-lg);
     font-weight: 500;
-    margin-bottom: var(--space-2);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-1);
+    animation: fadeInUp 0.6s ease 0.1s both;
   }
 
   .hero-name {
-    font-size: clamp(var(--text-3xl), 6vw, var(--text-5xl));
-    margin-bottom: var(--space-2);
-    background: linear-gradient(135deg, var(--color-heading) 40%, var(--color-brand));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-size: clamp(var(--text-4xl), 6vw, var(--text-6xl));
+    margin-bottom: var(--space-3);
+    line-height: 1.1;
+    animation: fadeInUp 0.6s ease 0.2s both;
   }
 
   .hero-tagline {
     font-size: var(--text-xl);
-    font-weight: 600;
+    font-weight: 500;
     color: var(--color-text-muted);
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-6);
+    min-height: 1.8em;
+    animation: fadeInUp 0.6s ease 0.3s both;
+  }
+
+  .hero-cursor {
+    animation: typing-cursor 0.8s ease infinite;
+    color: var(--color-brand);
+    font-weight: 300;
   }
 
   .hero-description {
     font-size: var(--text-lg);
     color: var(--color-text-muted);
-    max-width: 52ch;
+    max-width: 50ch;
     line-height: var(--leading-normal);
+    margin-bottom: var(--space-5);
+    animation: fadeInUp 0.6s ease 0.4s both;
+  }
+
+  .hero-proof-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
     margin-bottom: var(--space-8);
+    animation: fadeInUp 0.6s ease 0.45s both;
+  }
+
+  .hero-proof-list li {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-brand);
+    background: var(--color-brand-light);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    padding: var(--space-2) var(--space-3);
+    line-height: 1.3;
   }
 
   .hero-actions {
     display: flex;
     gap: var(--space-4);
     flex-wrap: wrap;
+    animation: fadeInUp 0.6s ease 0.55s both;
   }
 
-  .hero-badge {
+  .hero-cta {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-cta::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transform: translateX(-100%);
+    opacity: 0;
+    transition: transform var(--transition-slow), opacity var(--transition);
+  }
+  .hero-cta:hover::after,
+  .hero-cta:focus-visible::after {
+    opacity: 1;
+    transform: translateX(100%);
+  }
+
+  /* ── Hero terminal ── */
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+    animation: fadeInRight 0.8s ease 0.4s both;
+  }
+
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  .hero-terminal {
+    background: var(--color-code-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: var(--shadow-2xl);
+    transition: transform var(--transition-slow), box-shadow var(--transition-slow);
+  }
+  .hero-terminal:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-2xl), var(--shadow-glow);
+  }
+
+  .hero-terminal__bar {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 180px;
-    height: 180px;
-    border-radius: var(--radius-xl);
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
     background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    flex-shrink: 0;
+    border-bottom: 1px solid var(--color-border);
   }
 
-  .hero-badge-inner {
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .dot--red    { background: #ff5f57; }
+  .dot--yellow { background: #febc2e; }
+  .dot--green  { background: #28c840; }
+
+  .hero-terminal__title {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-terminal__body {
+    padding: var(--space-5);
     font-family: var(--font-mono);
     font-size: var(--text-sm);
-    font-weight: 700;
+    line-height: 1.9;
+  }
+
+  .t-prompt { color: var(--color-success); font-weight: 600; }
+  .t-cmd    { color: var(--color-brand); font-weight: 600; }
+  .t-flag   { color: var(--color-accent); }
+  .t-output { color: var(--color-text-muted); }
+  .t-cursor {
     color: var(--color-brand);
-    text-align: center;
-    line-height: 1.8;
+    animation: typing-cursor 1s ease infinite;
+  }
+
+  /* ── Scroll indicator ── */
+  .scroll-indicator {
+    position: absolute;
+    bottom: var(--space-8);
+    left: 50%;
+    transform: translateX(-50%);
+    animation: fadeIn 1s ease 1.5s both;
+  }
+
+  .scroll-indicator__mouse {
+    width: 24px;
+    height: 38px;
+    border: 2px solid var(--color-border);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+  }
+
+  .scroll-indicator__dot {
+    width: 3px;
+    height: 8px;
+    background: var(--color-brand);
+    border-radius: var(--radius-full);
+    animation: float 1.5s ease infinite;
   }
 
   /* ── Stack strip ── */
   .stack-strip {
-    padding: var(--space-6) 0;
+    padding: var(--space-5) 0;
     background: var(--color-surface);
     border-top: 1px solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
+    overflow: hidden;
   }
 
   .stack-strip-inner {
     display: flex;
     align-items: center;
-    gap: var(--space-4);
-    flex-wrap: wrap;
+    gap: var(--space-6);
   }
 
   .stack-strip-label {
     font-size: var(--text-xs);
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     color: var(--color-text-muted);
     white-space: nowrap;
     flex-shrink: 0;
   }
 
+  .stack-marquee {
+    overflow: hidden;
+    flex: 1;
+  }
+
   .stack-list {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-2);
+    gap: var(--space-3);
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
+  .stack-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    transition: all var(--transition);
+    cursor: default;
+    white-space: nowrap;
+  }
+  .stack-chip:hover {
+    border-color: var(--color-brand);
+    background: var(--color-brand-light);
+    color: var(--color-brand);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .stack-chip__icon {
+    font-size: 1em;
+    line-height: 1;
+  }
+
+  /* ── Section label ── */
+  .section-label {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-brand);
+    margin-bottom: var(--space-2);
+  }
+
+  /* ── Post read more ── */
+  .post-item__read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-brand);
+    margin-top: var(--space-3);
+    transition: gap var(--transition);
+  }
+  .post-item__read-more:hover {
+    gap: var(--space-3);
+    text-decoration: none;
+  }
+
+  /* ── Empty state ── */
+  .empty-state {
+    padding: var(--space-12);
+    text-align: center;
+    background: var(--color-bg-card);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-xl);
+    margin-top: var(--space-8);
+  }
+  .empty-state p {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
   /* ── CTA block ── */
   .cta-block {
     text-align: center;
-    padding-block: var(--space-16);
+    padding-block: var(--space-20);
   }
-  .cta-block h2 { margin-bottom: var(--space-4); }
-  .cta-block p  { margin-bottom: var(--space-8); opacity: 0.9; }
+  .cta-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: var(--radius-2xl);
+    background: rgba(255, 255, 255, 0.22);
+    margin-bottom: var(--space-6);
+    color: var(--color-on-brand);
+  }
+  .cta-block h2 {
+    margin-bottom: var(--space-4);
+    font-size: var(--text-3xl);
+  }
+  .cta-block > p { margin-bottom: var(--space-8); opacity: 0.97; font-size: var(--text-lg); }
 
   .newsletter-form-row {
     display: flex;
     gap: var(--space-3);
-    max-width: 420px;
+    max-width: 460px;
     margin: 0 auto var(--space-4);
   }
 
   .newsletter-form-row input {
     flex: 1;
-    padding: var(--space-3) var(--space-4);
+    padding: 0.85rem var(--space-5);
     font-size: var(--text-base);
     font-family: var(--font-sans);
-    background: rgba(255,255,255,0.15);
-    color: white;
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: var(--radius-md);
-    outline: none;
+    background: rgba(255,255,255,0.24);
+    color: var(--color-on-brand);
+    border: 1.5px solid rgba(255,255,255,0.58);
+    border-radius: var(--radius-xl);
+    backdrop-filter: blur(8px);
+    transition: all var(--transition);
   }
-  .newsletter-form-row input::placeholder { color: rgba(255,255,255,0.6); }
+  .newsletter-form-row input::placeholder { color: var(--color-on-brand-muted); }
   .newsletter-form-row input:focus {
-    border-color: white;
-    background: rgba(255,255,255,0.25);
+    border-color: var(--color-on-brand);
+    background: rgba(255,255,255,0.32);
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.35);
   }
-  .newsletter-form-row .btn--primary {
-    background: white;
-    color: var(--color-brand);
-    border-color: white;
+  .newsletter-btn {
+    background: var(--color-on-brand) !important;
+    color: var(--color-brand) !important;
+    border-color: var(--color-on-brand) !important;
+    font-weight: 700;
     flex-shrink: 0;
   }
-  .newsletter-form-row .btn--primary:hover {
-    background: rgba(255,255,255,0.9);
+  .newsletter-btn:hover {
+    background: rgba(255,255,255,0.9) !important;
+    box-shadow: var(--shadow-lg) !important;
   }
 
   .rss-hint {
     font-size: var(--text-sm);
-    opacity: 0.8;
+    opacity: 1;
     margin: 0;
   }
-  .rss-hint a { color: white; text-decoration: underline; }
+  .rss-hint a { color: var(--color-on-brand); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+
+  .newsletter-privacy {
+    margin-top: var(--space-4);
+    font-size: var(--text-xs);
+    line-height: 1.5;
+    opacity: 0.92;
+    max-width: 60ch;
+    margin-inline: auto;
+  }
+
+  @media (max-width: 1024px) {
+    .hero-orb {
+      animation: none;
+      filter: blur(64px);
+      opacity: 0.3;
+    }
+
+    .hero-orb--3 {
+      display: none;
+    }
+
+    .scroll-indicator {
+      display: none;
+    }
+  }
 
   /* ── Responsive ── */
-  @media (max-width: 640px) {
+  @media (max-width: 768px) {
+    .hero {
+      padding: var(--space-16) 0 var(--space-12);
+      min-height: auto;
+    }
     .hero-inner {
       grid-template-columns: 1fr;
+      gap: var(--space-8);
     }
-    .hero-badge { display: none; }
+    .hero-visual { display: none; }
+    .scroll-indicator { display: none; }
+
+    .hero-name {
+      font-size: clamp(var(--text-3xl), 8vw, var(--text-5xl));
+    }
+
+    .hero-proof-list {
+      gap: var(--space-2);
+    }
+
+    .hero-proof-list li {
+      width: 100%;
+    }
 
     .newsletter-form-row {
       flex-direction: column;
+    }
+
+    .stack-strip-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-3);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-badge-label,
+    .hero-greeting,
+    .hero-name,
+    .hero-tagline,
+    .hero-description,
+    .hero-proof-list,
+    .hero-actions,
+    .hero-visual,
+    .scroll-indicator {
+      animation: none;
+    }
+
+    .hero-orb,
+    .hero-badge-dot,
+    .hero-cursor,
+    .t-cursor,
+    .scroll-indicator__dot {
+      animation: none;
+    }
+
+    .hero-cta::after {
+      display: none;
+    }
+
+    .hero-terminal:hover {
+      transform: none;
     }
   }
 </style>
