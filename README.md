@@ -1,6 +1,6 @@
 # andrescdo.github.io
 
-Personal portfolio and DevOps/SysAdmin blog — built with [Astro 4](https://astro.build).
+Personal portfolio and technical blog focused on CI/CD pipelines, Linux operations, and Python automation — built with [Astro 4](https://astro.build).
 
 🌐 **Live site:** [andrescdo.github.io](https://andrescdo.github.io)
 
@@ -141,4 +141,4 @@ See [`docs/adr/`](docs/adr/) for design decisions made during development.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+No license file is currently included in this repository.

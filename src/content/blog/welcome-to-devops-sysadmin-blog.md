@@ -1,49 +1,23 @@
 ---
-title: "Welcome to my DevOps and SysAdmin Blog!"
-description: "An introduction to this DevOps and SysAdmin blog — covering Linux, Python, Kubernetes, CI/CD, and cloud computing."
+title: "Welcome to my DevOps and Linux Engineering Blog"
+description: "A short introduction to this blog: CI/CD, Linux operations, Python automation, and practical DevOps lessons."
 date: 2023-07-23
 categories: [devops, sysadmin]
 ---
 
-Hello there! Welcome to my blog where I share my experiences as a DevOps professional and System Administrator. I'm excited to showcase my expertise and insights in streamlining projects, automating workflows, and delivering high-quality code.
+Welcome — and thanks for reading.
 
-In this blog, you'll find a mix of technical tips, tutorials, and discussions on various topics related to DevOps, Linux system management, automation, and cloud computing. I aim to provide valuable content that can help you improve your infrastructure and development practices.
+This blog is where I document practical DevOps work: improving CI/CD pipelines, operating Linux systems, and automating repetitive tasks with Python and Bash. The goal is simple: share useful notes that others can apply in real environments.
 
-Let's get started with a quick introduction about myself:
+## About this blog
 
-## About Me
+- **CI/CD pipelines:** build, test, and deployment workflows with reliability in mind.
+- **Linux operations:** day-to-day administration, troubleshooting, and system maintenance.
+- **Automation with Python:** scripts and tools that remove manual steps and reduce errors.
+- **Case-study style posts:** problem → approach → outcome, including trade-offs and constraints when relevant.
 
-I am an experienced DevOps professional with a unique blend of technical and operational skills. My core competencies include:
+## Why I write
 
-- **Linux System Management:** I excel in efficiently managing Linux-based systems, ensuring their stability and security.
+I use writing to think clearly, keep a record of decisions, and share lessons learned. If a post helps you solve a real problem faster, then it did its job.
 
-- **Python Development:** I am proficient in Python programming, leveraging its power for automation and script development.
-
-- **Bash Scripting:** I utilise Bash scripts to streamline repetitive tasks and optimise system workflows.
-
-- **Microservices and Agile Methodologies:** I embrace microservices architecture and agile practices to enhance software development and deployment.
-
-- **Git Workflow and Jenkins Pipeline:** I have hands-on experience in setting up effective Git workflows and implementing Jenkins pipelines for continuous integration and delivery.
-
-- **Docker and Kubernetes:** I am well-versed in containerisation with Docker and have expertise in Kubernetes for scalable and efficient orchestration.
-
-- **Cloud Computing and Infrastructure as Code:** Working closely with Google Cloud Platform (GCP) and Terraform, I deploy and manage cloud infrastructure using infrastructure as code principles.
-
-- **Configuration Management with Ansible:** I use Ansible to efficiently manage remote systems and ensure consistency across environments.
-
-- **Web Servers and Databases:** Proficient in Nginx and Apache web servers, as well as MySQL and MariaDB databases, I ensure seamless web application operation.
-
-- **Monitoring and Alerting:** I leverage tools like Grafana, Prometheus, and Nagios to provide data-driven insights and proactive monitoring.
-
-## What's Coming
-
-In upcoming posts I'll explore:
-
-- Setting up Grafana dashboards with Prometheus for infrastructure visibility
-- Terraform module patterns for reproducible GCP environments
-- Kubernetes HPA deep-dives and custom metrics pipelines
-- Ansible hardening playbooks for production Linux servers
-
-Stay tuned for more content. Feel free to reach out on [LinkedIn](https://www.linkedin.com/in/andrescdo/) with questions or topic suggestions.
-
-Happy reading and learning!
+If you have feedback or a topic you'd like me to cover, feel free to connect on [LinkedIn](https://www.linkedin.com/in/andres-caicedo-58888720a/).

@@ -10,8 +10,8 @@ export async function GET(context) {
   );
 
   return rss({
-    title:       'Andres Caicedo — DevOps & SysAdmin Blog',
-    description: 'Articles on Kubernetes, GCP, Terraform, CI/CD pipelines, and infrastructure automation.',
+    title:       'Andres Caicedo — DevOps & Platform Engineering Blog',
+    description: 'Practical notes on CI/CD pipelines, Linux operations, and Python automation.',
     site:        context.site,
     items: sorted.map((post) => ({
       title:       post.data.title,
