@@ -3,6 +3,7 @@ export interface Project {
   description: string;
   tech:        string[];
   url:         string;
+  relatedRepos?: { name: string; url: string }[];
   featured:    boolean;
   category:    string;
 }
@@ -13,6 +14,10 @@ export const projects: Project[] = [
     description: 'Designed to automate Kubernetes deployments with horizontal scaling and health-based rollout checks. Combines CI/CD orchestration with Prometheus metrics to reduce manual release steps.',
     tech:        ['Kubernetes', 'Helm', 'Prometheus', 'GitHub Actions', 'Python'],
     url:         '/contact/?subject=Kubernetes%20Auto-Scaling%20Pipeline',
+    relatedRepos: [
+      { name: 'gcp-k8s-automation', url: 'https://github.com/AndresCdo/gcp-k8s-automation' },
+      { name: 'gce-jenkins', url: 'https://github.com/AndresCdo/gce-jenkins' },
+    ],
     featured:    true,
     category:    'DevOps',
   },
@@ -21,6 +26,10 @@ export const projects: Project[] = [
     description: 'Built to standardize GCP provisioning across environments using reusable Terraform modules. Covers core infrastructure components such as networking, compute, and access control.',
     tech:        ['Terraform', 'GCP', 'Cloud SQL', 'GKE', 'IAM'],
     url:         '/contact/?subject=Terraform%20GCP%20Infrastructure%20Modules',
+    relatedRepos: [
+      { name: 'gcp-bucket-terraform-backend', url: 'https://github.com/AndresCdo/gcp-bucket-terraform-backend' },
+      { name: 'tf-gcp-source-repo', url: 'https://github.com/AndresCdo/tf-gcp-source-repo' },
+    ],
     featured:    true,
     category:    'IaC',
   },
@@ -29,6 +38,11 @@ export const projects: Project[] = [
     description: 'Created to keep Linux server setup and maintenance consistent through repeatable playbooks. Focuses on configuration automation, baseline hardening, and deployment routines.',
     tech:        ['Ansible', 'Linux', 'Bash', 'YAML'],
     url:         '/contact/?subject=Ansible%20Playbook%20Collection',
+    relatedRepos: [
+      { name: 'clawdbot-ansible', url: 'https://github.com/AndresCdo/clawdbot-ansible' },
+      { name: 'ansible-provisioning-kit', url: 'https://github.com/AndresCdo/ansible-provisioning-kit' },
+      { name: 'ansible-project-automation', url: 'https://github.com/AndresCdo/ansible-project-automation' },
+    ],
     featured:    true,
     category:    'Automation',
   },
@@ -37,6 +51,9 @@ export const projects: Project[] = [
     description: 'Assembles dashboards and alert views to improve operational visibility for containerized workloads. Integrates metrics and logs to support faster troubleshooting.',
     tech:        ['Grafana', 'Prometheus', 'Loki', 'Docker', 'Alertmanager'],
     url:         '/contact/?subject=Grafana%20Monitoring%20Dashboard',
+    relatedRepos: [
+      { name: 'devops-metrics-dashboard', url: 'https://github.com/AndresCdo/devops-metrics-dashboard' },
+    ],
     featured:    false,
     category:    'Monitoring',
   },

@@ -4,6 +4,9 @@ import { featuredProjects, otherProjects } from '../data/projects';
 
 const categories = [...new Set([...featuredProjects, ...otherProjects].map(p => p.category))];
 const isExternalUrl = (url: string) => /^https?:\/\//.test(url);
+const isContactSubjectUrl = (url: string) => url.startsWith('/contact/?subject=');
+const projectPrimaryUrl = (project: { url: string; relatedRepos?: { url: string }[] }) =>
+  project.relatedRepos?.[0]?.url ?? project.url;
 ---
 
 <BaseLayout
@@ -18,7 +21,7 @@ const isExternalUrl = (url: string) => /^https?:\/\//.test(url);
       '@type': 'CreativeWork',
       name: project.title,
       description: project.description,
-      url: project.url,
+      url: projectPrimaryUrl(project),
       keywords: project.tech,
     })),
   }}
@@ -88,9 +91,31 @@ const isExternalUrl = (url: string) => /^https?:\/\//.test(url);
                 rel={isExternalUrl(project.url) ? 'noopener noreferrer' : undefined}
                 aria-label={isExternalUrl(project.url) ? `View ${project.title} (opens in new tab)` : `View ${project.title}`}
               >
-                View project
+                {isContactSubjectUrl(project.url) ? 'Discuss project' : 'View project'}
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
               </a>
+
+              {project.relatedRepos?.length ? (
+                <div class="project-card__repos" aria-label="Related repositories">
+                  <span class="project-card__repos-label">Related repositories</span>
+                  <ul class="project-card__repos-list" role="list">
+                    {project.relatedRepos.map((repo) => (
+                      <li>
+                        <a
+                          href={repo.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Open ${repo.name} repository (opens in new tab)`}
+                        >
+                          {repo.name}
+                          <span class="external-link-indicator" aria-hidden="true">↗</span>
+                          <span class="sr-only"> (opens in new tab)</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
             </footer>
           </article>
         ))}
@@ -137,9 +162,31 @@ const isExternalUrl = (url: string) => /^https?:\/\//.test(url);
                 rel={isExternalUrl(project.url) ? 'noopener noreferrer' : undefined}
                 aria-label={isExternalUrl(project.url) ? `View ${project.title} (opens in new tab)` : `View ${project.title}`}
               >
-                View project
+                {isContactSubjectUrl(project.url) ? 'Discuss project' : 'View project'}
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
               </a>
+
+              {project.relatedRepos?.length ? (
+                <div class="project-card__repos" aria-label="Related repositories">
+                  <span class="project-card__repos-label">Related repositories</span>
+                  <ul class="project-card__repos-list" role="list">
+                    {project.relatedRepos.map((repo) => (
+                      <li>
+                        <a
+                          href={repo.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Open ${repo.name} repository (opens in new tab)`}
+                        >
+                          {repo.name}
+                          <span class="external-link-indicator" aria-hidden="true">↗</span>
+                          <span class="sr-only"> (opens in new tab)</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
             </footer>
           </article>
         ))}
