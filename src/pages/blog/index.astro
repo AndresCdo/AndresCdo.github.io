@@ -114,7 +114,11 @@ const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));
     color: var(--color-brand);
     background: var(--color-brand-light);
     border-radius: var(--radius-full);
-    transition: all var(--transition);
+    transition:
+      background-color var(--transition),
+      color var(--transition),
+      transform var(--transition-fast),
+      box-shadow var(--transition);
   }
   .rss-badge:hover {
     background: var(--color-brand);

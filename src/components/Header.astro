@@ -292,7 +292,7 @@ const isActive = (href: string) =>
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.5);
     border-bottom: 1px solid var(--glass-border);
     height: var(--header-height);
-    transition: all var(--transition);
+    transition: box-shadow var(--transition), border-color var(--transition), background-color var(--transition);
   }
 
   .site-header.is-scrolled {
@@ -411,7 +411,12 @@ const isActive = (href: string) =>
     cursor: pointer;
     font-size: 1rem;
     color: var(--color-text-muted);
-    transition: all var(--transition);
+    transition:
+      background-color var(--transition),
+      border-color var(--transition),
+      color var(--transition),
+      box-shadow var(--transition),
+      transform var(--transition-fast);
   }
   .icon-btn:hover {
     background: var(--color-surface);
@@ -535,7 +540,7 @@ const isActive = (href: string) =>
     font-weight: 500;
     color: var(--color-text);
     border-radius: var(--radius-lg);
-    transition: all var(--transition);
+    transition: background-color var(--transition), color var(--transition), border-color var(--transition);
     text-decoration: none;
     min-height: 44px;
   }

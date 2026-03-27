@@ -284,7 +284,10 @@ const experience = [
     border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
     padding: var(--space-6);
-    transition: all var(--transition-slow);
+    transition:
+      border-color var(--transition),
+      box-shadow var(--transition-slow),
+      transform var(--transition-fast);
   }
   .about-card:hover {
     border-color: var(--color-brand);
@@ -386,7 +389,7 @@ const experience = [
     border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
     padding: var(--space-5);
-    transition: all var(--transition);
+    transition: border-color var(--transition), box-shadow var(--transition);
   }
   .skill-group:hover {
     border-color: var(--color-brand-alpha);
@@ -424,7 +427,11 @@ const experience = [
     border-radius: var(--radius-xl);
     text-decoration: none;
     color: var(--color-text);
-    transition: all var(--transition);
+    transition:
+      border-color var(--transition),
+      box-shadow var(--transition),
+      transform var(--transition-fast),
+      color var(--transition);
   }
   .connect-card:hover {
     border-color: var(--color-brand);
@@ -456,7 +463,7 @@ const experience = [
   .connect-card__arrow {
     margin-left: auto;
     color: var(--color-text-muted);
-    transition: all var(--transition);
+    transition: color var(--transition), transform var(--transition-fast);
     flex-shrink: 0;
   }
   .connect-card:hover .connect-card__arrow {

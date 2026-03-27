@@ -303,12 +303,18 @@ pre code { background: none; border: none; padding: 0; font-size: inherit; font-
   justify-content: center;
   gap: var(--space-2);
   padding: 0.7rem 1.6rem;
+  min-height: 2.75rem;
   font-size: var(--text-sm);
   font-weight: 600;
   border-radius: var(--radius-lg);
   border: 2px solid transparent;
   cursor: pointer;
-  transition: all var(--transition), transform var(--transition-fast), box-shadow var(--transition);
+  transition:
+    background-color var(--transition),
+    color var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition-fast);
   text-decoration: none;
   white-space: nowrap;
   line-height: 1;
@@ -354,6 +360,7 @@ pre code { background: none; border: none; padding: 0; font-size: inherit; font-
 
 .btn--sm {
   padding: 0.45rem 1rem;
+  min-height: 2.25rem;
   font-size: var(--text-xs);
   border-radius: var(--radius-md);
 }
@@ -375,7 +382,7 @@ pre code { background: none; border: none; padding: 0; font-size: inherit; font-
   color: var(--color-brand);
   white-space: nowrap;
   letter-spacing: 0.01em;
-  transition: all var(--transition);
+  transition: background-color var(--transition), color var(--transition);
 }
 .tag:hover {
   background: var(--color-brand);
@@ -400,7 +407,11 @@ pre code { background: none; border: none; padding: 0; font-size: inherit; font-
   color: var(--color-text-muted);
   border: 1px solid var(--color-border);
   white-space: nowrap;
-  transition: all var(--transition);
+  transition:
+    background-color var(--transition),
+    color var(--transition),
+    border-color var(--transition),
+    transform var(--transition-fast);
 }
 .tech-badge:hover {
   background: var(--color-brand-light);
@@ -425,7 +436,10 @@ pre code { background: none; border: none; padding: 0; font-size: inherit; font-
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  transition: all var(--transition-slow);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition-slow),
+    transform var(--transition-slow);
   position: relative;
   overflow: hidden;
 }
@@ -450,6 +464,12 @@ pre code { background: none; border: none; padding: 0; font-size: inherit; font-
 .project-card > * {
   position: relative;
   z-index: 1;
+}
+
+.project-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
 }
 
 .project-card__category {
@@ -517,7 +537,10 @@ pre code { background: none; border: none; padding: 0; font-size: inherit; font-
   color: var(--color-text-muted);
   background: var(--color-surface);
   text-decoration: none;
-  transition: all var(--transition);
+  transition:
+    color var(--transition),
+    border-color var(--transition),
+    background-color var(--transition);
 }
 
 .project-card__repos-list a:hover {
@@ -572,7 +595,7 @@ pre code { background: none; border: none; padding: 0; font-size: inherit; font-
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
-  transition: all var(--transition);
+  transition: color var(--transition), gap var(--transition-fast);
 }
 .section-header__link:hover {
   gap: var(--space-2);
@@ -593,7 +616,10 @@ pre code { background: none; border: none; padding: 0; font-size: inherit; font-
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
   padding: var(--space-6);
-  transition: all var(--transition-slow);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition-slow),
+    transform var(--transition-slow);
   position: relative;
   overflow: hidden;
 }
@@ -702,7 +728,22 @@ pre code { background: none; border: none; padding: 0; font-size: inherit; font-
   border-radius: var(--radius-md);
   cursor: pointer;
   opacity: 0;
-  transition: all var(--transition);
+  transition:
+    opacity var(--transition),
+    background-color var(--transition),
+    color var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    padding-inline: var(--space-4);
+  }
+
+  .home-section {
+    padding: var(--space-16) 0;
+  }
 }
 .code-block:hover .code-copy-btn,
 .code-copy-btn:focus { opacity: 1; }
@@ -872,6 +913,13 @@ pre code { background: none; border: none; padding: 0; font-size: inherit; font-
   .animate-on-scroll {
     opacity: 1;
     transform: none;
+  }
+
+  .btn:hover,
+  .project-card:hover,
+  .post-item:hover,
+  .tech-badge:hover {
+    transform: none !important;
   }
 }
 

@@ -129,7 +129,7 @@ const postSchema = {
     font-weight: 500;
     color: var(--color-text-muted);
     margin-bottom: var(--space-8);
-    transition: all var(--transition);
+    transition: color var(--transition), gap var(--transition-fast);
   }
   .post-back:hover {
     color: var(--color-brand);
@@ -210,7 +210,12 @@ const postSchema = {
     background: var(--color-surface);
     color: var(--color-text-muted);
     border: 1px solid var(--color-border);
-    transition: all var(--transition);
+    transition:
+      background-color var(--transition),
+      color var(--transition),
+      border-color var(--transition),
+      transform var(--transition-fast),
+      box-shadow var(--transition);
   }
   .share-btn:hover {
     background: var(--color-brand);
