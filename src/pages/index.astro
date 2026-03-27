@@ -9,6 +9,7 @@ const posts = (await getCollection('blog'))
   .slice(0, 3);
 
 const isExternalUrl = (url: string) => /^https?:\/\//.test(url);
+const isContactSubjectUrl = (url: string) => url.startsWith('/contact/?subject=');
 
 const coreStack = [
   { name: 'GitHub Actions', icon: '⚙️' },
@@ -184,14 +185,36 @@ const coreStack = [
                   href={project.url}
                   target={isExternalUrl(project.url) ? '_blank' : undefined}
                   rel={isExternalUrl(project.url) ? 'noopener noreferrer' : undefined}
-                  aria-label={isExternalUrl(project.url) ? `View project (opens in new tab)` : 'View project'}
+                  aria-label={isExternalUrl(project.url) ? `View project (opens in new tab)` : isContactSubjectUrl(project.url) ? 'Discuss project' : 'View project'}
                >
-                 View project
-                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                 {isContactSubjectUrl(project.url) ? 'Discuss project' : 'View project'}
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
                </a>
-            </footer>
-          </article>
-        ))}
+
+               {project.relatedRepos?.length ? (
+                 <div class="project-card__repos" aria-label="Related repositories">
+                   <span class="project-card__repos-label">Related repositories</span>
+                   <ul class="project-card__repos-list" role="list">
+                     {project.relatedRepos.slice(0, 2).map((repo) => (
+                       <li>
+                         <a
+                           href={repo.url}
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           aria-label={`Open ${repo.name} repository (opens in new tab)`}
+                         >
+                           {repo.name}
+                           <span class="external-link-indicator" aria-hidden="true">↗</span>
+                           <span class="sr-only"> (opens in new tab)</span>
+                         </a>
+                       </li>
+                     ))}
+                   </ul>
+                 </div>
+               ) : null}
+             </footer>
+           </article>
+         ))}
       </div>
     </div>
   </section>
