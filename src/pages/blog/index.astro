@@ -28,7 +28,7 @@ const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));
       '@type': 'BlogPosting',
       headline: post.data.title,
       datePublished: post.data.date.toISOString(),
-      url: `https://andrescdo.github.io/blog/${post.slug}/`,
+      url: `https://andrescdo.github.io/blog/${post.id}/`,
       description: post.data.description,
     })),
   }}
@@ -59,7 +59,7 @@ const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));
                 <time class="archive-date" datetime={post.data.date.toISOString()}>
                   {post.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                 </time>
-                <a class="archive-link" href={`/blog/${post.slug}/`}>
+                <a class="archive-link" href={`/blog/${post.id}/`}>
                   {post.data.title}
                 </a>
                 {(post.data.categories ?? []).length > 0 && (
