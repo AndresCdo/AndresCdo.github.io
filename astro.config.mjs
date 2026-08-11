@@ -22,4 +22,12 @@ export default defineConfig({
     // Inline small assets to reduce round-trips
     inlineStylesheets: 'auto',
   },
+
+  vite: {
+    build: {
+      // Keep legacy `(max-width: …)` media queries instead of the Media
+      // Queries Level 4 range syntax, which older browsers ignore entirely.
+      cssTarget: ['safari15', 'chrome100', 'firefox100'],
+    },
+  },
 });
