@@ -27,8 +27,7 @@ export const projects: Project[] = [
     tech:        ['Terraform', 'GCP', 'Cloud SQL', 'GKE', 'IAM'],
     url:         '/contact/?subject=Terraform%20GCP%20Infrastructure%20Modules',
     relatedRepos: [
-      { name: 'gcp-bucket-terraform-backend', url: 'https://github.com/AndresCdo/gcp-bucket-terraform-backend' },
-      { name: 'tf-gcp-source-repo', url: 'https://github.com/AndresCdo/tf-gcp-source-repo' },
+      { name: 'terraform-practice', url: 'https://github.com/AndresCdo/terraform-practice' },
     ],
     featured:    true,
     category:    'IaC',
@@ -47,13 +46,18 @@ export const projects: Project[] = [
     category:    'Automation',
   },
   {
+    title:       'Kolmogorov-Arnold Networks in Rust',
+    description: 'Implements fixed-grid Kolmogorov-Arnold Networks with cubic B-spline edge activations and full reverse-mode gradients. Ships deterministic seeding, versioned JSON persistence, and a validated core covered by 24 tests in CI.',
+    tech:        ['Rust', 'Cargo', 'Machine Learning', 'GitHub Actions'],
+    url:         'https://github.com/AndresCdo/kan-rust',
+    featured:    true,
+    category:    'Systems',
+  },
+  {
     title:       'Grafana Monitoring Dashboard',
     description: 'Assembles dashboards and alert views to improve operational visibility for containerized workloads. Integrates metrics and logs to support faster troubleshooting.',
     tech:        ['Grafana', 'Prometheus', 'Loki', 'Docker', 'Alertmanager'],
     url:         '/contact/?subject=Grafana%20Monitoring%20Dashboard',
-    relatedRepos: [
-      { name: 'devops-metrics-dashboard', url: 'https://github.com/AndresCdo/devops-metrics-dashboard' },
-    ],
     featured:    false,
     category:    'Monitoring',
   },
@@ -64,6 +68,25 @@ export const projects: Project[] = [
     url:         '/contact/?subject=Python%20DevOps%20Toolkit',
     featured:    false,
     category:    'Automation',
+  },
+  {
+    title:       'Color Predictor',
+    description: 'Trains a small neural network in the browser to predict color preferences from like and dislike ratings. Runs entirely client-side with TensorFlow.js and ships as a static export deployed from CI.',
+    tech:        ['Next.js', 'React', 'TensorFlow.js', 'GitHub Actions'],
+    url:         'https://andrescdo.github.io/color-predictor/',
+    relatedRepos: [
+      { name: 'color-predictor', url: 'https://github.com/AndresCdo/color-predictor' },
+    ],
+    featured:    false,
+    category:    'Web',
+  },
+  {
+    title:       'COBOL Crash Course',
+    description: 'Documents COBOL fundamentals across ten lecture notes covering data types, control flow, file handling, and debugging. Includes a runnable example program and a GnuCOBOL build script for compiling sources.',
+    tech:        ['COBOL', 'GnuCOBOL', 'Bash', 'Markdown'],
+    url:         'https://github.com/AndresCdo/cobol-crash-course',
+    featured:    false,
+    category:    'Education',
   },
   {
     title:       'Personal Portfolio Website',
