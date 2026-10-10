@@ -36,7 +36,7 @@ const footerNav = [
     <div class="footer-grid">
       <!-- Brand -->
       <div class="footer-brand">
-        <a href="/" class="footer-logo-link" aria-label="Home">
+        <a href="/" class="footer-logo-link">
           <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <rect width="32" height="32" rx="8" fill="url(#footer-logo-gradient)"/>
             <path d="M8 22L14 10H18L24 22" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -59,7 +59,7 @@ const footerNav = [
 
       <!-- Navigation -->
       <div class="footer-nav-col">
-        <h3 class="footer-col-title">Navigation</h3>
+        <h2 class="footer-col-title">Navigation</h2>
         <nav aria-label="Footer navigation">
           <ul class="footer-nav-list">
             {footerNav.map(({ href, label }) => (
@@ -71,7 +71,7 @@ const footerNav = [
 
       <!-- Social -->
       <div class="footer-social-col">
-        <h3 class="footer-col-title">Connect</h3>
+        <h2 class="footer-col-title">Connect</h2>
         <div class="footer-social-links">
           {social.map(({ href, label, svg }) => (
             <a
@@ -157,6 +157,7 @@ const footerNav = [
     align-items: center;
     gap: var(--space-3);
     text-decoration: none;
+    min-height: 2.75rem;
     transition: opacity var(--transition);
   }
   .footer-logo-link:hover { opacity: 0.8; }
@@ -198,6 +199,7 @@ const footerNav = [
     color: var(--color-text-muted);
     transition: color var(--transition), padding-left var(--transition);
     display: block;
+    padding-block: var(--space-1);
   }
   .footer-link:hover {
     color: var(--color-brand);
@@ -226,6 +228,7 @@ const footerNav = [
       color var(--transition),
       transform var(--transition-fast);
     text-decoration: none;
+    min-height: 2.75rem;
     margin: 0 calc(var(--space-3) * -1);
   }
   .social-link:hover {
@@ -251,7 +254,7 @@ const footerNav = [
     color: var(--color-text-muted);
     text-decoration: underline;
     text-underline-offset: 2px;
-    text-decoration-color: var(--color-border);
+    text-decoration-color: var(--color-text-muted);
   }
   .footer-bottom a:not(.back-to-top):hover {
     color: var(--color-brand);

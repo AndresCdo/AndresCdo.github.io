@@ -27,6 +27,12 @@
   --color-code-bg:      #f8fafc;
   --color-code-text:    #1e293b;
   --color-focus:        #1d4ed8;
+  /* Text-safe variants (>= 4.5:1 on the light surfaces); --color-error stays for borders and icons */
+  --color-error-text:   #b91c1c;
+  --color-warning-text: #b45309;
+  --color-accent-text:  #0e7490;
+  --color-on-success:   #ffffff;
+  --color-input-border: #7d8593;
   --color-on-brand:     #ffffff;
   --color-on-brand-muted: rgba(255, 255, 255, 0.86);
 
@@ -138,6 +144,11 @@
   --color-code-bg:      #1a2332;
   --color-code-text:    #e2e8f0;
   --color-focus:        #93c5fd;
+  --color-error-text:   #fca5a5;
+  --color-warning-text: #fbbf24;
+  --color-accent-text:  #22d3ee;
+  --color-on-success:   #0b0f19;
+  --color-input-border: #6b7385;
   --color-on-brand:     #0b0f19;
   --color-on-brand-muted: rgba(11, 15, 25, 0.8);
 
@@ -191,7 +202,6 @@ body {
   transition: background-color var(--transition-slow), color var(--transition-slow);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 
 img, video, svg { max-width: 100%; display: block; }
@@ -360,7 +370,7 @@ pre code { background: none; border: none; padding: 0; font-size: inherit; font-
 
 .btn--sm {
   padding: 0.45rem 1rem;
-  min-height: 2.25rem;
+  min-height: 2.75rem;
   font-size: var(--text-xs);
   border-radius: var(--radius-md);
 }
@@ -532,6 +542,7 @@ pre code { background: none; border: none; padding: 0; font-size: inherit; font-
   font-size: var(--text-xs);
   font-family: var(--font-mono);
   padding: 0.3rem 0.6rem;
+  min-height: 2.75rem;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-full);
   color: var(--color-text-muted);
@@ -595,6 +606,7 @@ pre code { background: none; border: none; padding: 0; font-size: inherit; font-
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
+  padding-block: var(--space-2);
   transition: color var(--transition), gap var(--transition-fast);
 }
 .section-header__link:hover {
@@ -687,7 +699,7 @@ pre code { background: none; border: none; padding: 0; font-size: inherit; font-
   font-family: var(--font-sans);
   background: var(--color-bg-alt);
   color: var(--color-text);
-  border: 1.5px solid var(--color-border);
+  border: 1.5px solid var(--color-input-border);
   border-radius: var(--radius-lg);
   transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
 }
@@ -704,7 +716,7 @@ pre code { background: none; border: none; padding: 0; font-size: inherit; font-
 .form-group textarea { resize: vertical; min-height: 140px; }
 .form-error {
   font-size: var(--text-xs);
-  color: var(--color-error);
+  color: var(--color-error-text);
   min-height: 1em;
 }
 
@@ -712,10 +724,18 @@ pre code { background: none; border: none; padding: 0; font-size: inherit; font-
 .code-block {
   position: relative;
 }
+/* Reserve a strip above the first line so the copy control never covers code */
+.code-block > pre {
+  padding-top: 3.25rem;
+}
 .code-copy-btn {
   position: absolute;
-  top: var(--space-3);
-  right: var(--space-3);
+  top: var(--space-2);
+  right: var(--space-2);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  white-space: nowrap;
   min-height: 44px;
   min-width: 44px;
   padding: var(--space-2) var(--space-3);
@@ -747,6 +767,10 @@ pre code { background: none; border: none; padding: 0; font-size: inherit; font-
 }
 .code-block:hover .code-copy-btn,
 .code-copy-btn:focus { opacity: 1; }
+/* No hover on touch screens: keep the control visible there */
+@media (hover: none) {
+  .code-copy-btn { opacity: 1; }
+}
 .code-copy-btn:hover {
   background: var(--color-brand);
   color: var(--color-on-brand);
@@ -754,8 +778,13 @@ pre code { background: none; border: none; padding: 0; font-size: inherit; font-
 }
 .code-copy-btn--copied {
   background: var(--color-success) !important;
-  color: #0b0f19 !important;
+  color: var(--color-on-success) !important;
   border-color: var(--color-success) !important;
+  opacity: 1;
+}
+.code-copy-btn--error {
+  color: var(--color-error-text) !important;
+  border-color: var(--color-error-text) !important;
   opacity: 1;
 }
 
@@ -787,7 +816,7 @@ pre code { background: none; border: none; padding: 0; font-size: inherit; font-
 .prose a   {
   text-decoration: underline;
   text-underline-offset: 3px;
-  text-decoration-color: var(--color-brand-alpha);
+  text-decoration-color: var(--color-brand);
   transition: text-decoration-color var(--transition);
 }
 .prose a:hover { text-decoration-color: var(--color-brand); }
@@ -865,7 +894,8 @@ pre code { background: none; border: none; padding: 0; font-size: inherit; font-
 }
 
 /* ── Scroll animations ─────────────────────────────────────────────────────── */
-.animate-on-scroll {
+/* Hidden only when JavaScript is running to reveal it (see the .js class in BaseLayout) */
+.js .animate-on-scroll {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),

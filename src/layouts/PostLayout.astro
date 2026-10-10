@@ -60,7 +60,7 @@ const postSchema = {
         </div>
         <div class="post-meta-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <span class="reading-time" data-reading-time aria-label="Estimated reading time">
+          <span class="reading-time" data-reading-time>
             <!-- Populated by JS -->
           </span>
         </div>
@@ -119,6 +119,8 @@ const postSchema = {
 <style>
   .post-page {
     padding-block: var(--space-12) var(--space-16);
+    /* Centre a reading-width column (the .wrapper default is 1200px) */
+    max-width: calc(var(--max-width-prose) + var(--space-12));
   }
 
   .post-back {

@@ -180,11 +180,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     line-height: 1.9;
   }
 
+  /* Terminal lines are plain text, not inline-code chips */
+  .error-terminal__body code {
+    display: block;
+    background: none;
+    border: 0;
+    padding: 0;
+    font-size: inherit;
+    font-weight: 400;
+    color: inherit;
+  }
+
   .t-prompt { color: var(--color-success); font-weight: 600; }
   .t-cmd    { color: var(--color-brand); font-weight: 600; }
-  .t-flag   { color: var(--color-accent); }
-  .t-string { color: var(--color-warning); }
-  .t-error  { color: var(--color-error); font-weight: 500; }
+  .t-flag   { color: var(--color-accent-text); }
+  .t-string { color: var(--color-warning-text); }
+  .t-error  { color: var(--color-error-text); font-weight: 500; }
   .t-cursor {
     color: var(--color-brand);
     animation: typing-cursor 1s ease infinite;
