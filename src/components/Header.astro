@@ -15,7 +15,7 @@ const isActive = (href: string) =>
 <header class="site-header" id="site-header">
   <div class="wrapper header-inner">
     <!-- Logo -->
-    <a class="site-logo" href="/" aria-label="Andres Caicedo - Home">
+    <a class="site-logo" href="/" aria-label="Andres Caicedo DevOps & Platform Engineer - Home">
       <span class="site-logo__mark" aria-hidden="true">
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="32" height="32" rx="8" fill="url(#logo-gradient)"/>
@@ -32,7 +32,7 @@ const isActive = (href: string) =>
       </span>
       <span class="site-logo__text">
         <span class="site-logo__name">Andres Caicedo</span>
-        <span class="site-logo__role">DevOps Engineer</span>
+        <span class="site-logo__role">DevOps & Platform Engineer</span>
       </span>
     </a>
 
@@ -60,7 +60,7 @@ const isActive = (href: string) =>
         id="theme-toggle"
         class="icon-btn theme-toggle-btn"
         type="button"
-        aria-label="Switch to dark theme"
+        aria-label="Dark mode"
         aria-pressed="false"
         title="Toggle theme"
       >
@@ -87,7 +87,7 @@ const isActive = (href: string) =>
         type="button"
         aria-controls="mobile-drawer"
         aria-expanded="false"
-        aria-label="Open navigation menu"
+        aria-label="Navigation menu"
       >
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
@@ -96,31 +96,33 @@ const isActive = (href: string) =>
     </div>
   </div>
 
-  <!-- Mobile nav drawer -->
-  <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
-    <div class="mobile-drawer__backdrop"></div>
-    <nav class="mobile-drawer__panel" id="mobile-drawer-panel" aria-label="Mobile navigation" tabindex="-1">
-      <ul role="list">
-        {navItems.map(({ href, label }, i) => (
-          <li style={`--delay: ${i * 0.05}s`}>
-            <a
-              href={href}
-              class:list={['mobile-nav-link', { 'mobile-nav-link--active': isActive(href) }]}
-              aria-current={isActive(href) ? 'page' : undefined}
-            >
-              <span class="mobile-nav-link__text">{label}</span>
-              {isActive(href) && <span class="mobile-nav-link__dot" aria-hidden="true"></span>}
-            </a>
-          </li>
-        ))}
-      </ul>
-      <div class="mobile-drawer__footer">
-        <p>Andres Caicedo</p>
-        <p class="mobile-drawer__subtitle">DevOps & Platform Engineer</p>
-      </div>
-    </nav>
-  </div>
 </header>
+
+<!-- Mobile nav drawer. Kept outside <header>: the header's backdrop-filter would make it
+     the containing block for this fixed element and shrink the drawer to header height. -->
+<div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+  <div class="mobile-drawer__backdrop"></div>
+  <nav class="mobile-drawer__panel" id="mobile-drawer-panel" aria-label="Mobile navigation" tabindex="-1">
+    <ul role="list">
+      {navItems.map(({ href, label }, i) => (
+        <li style={`--delay: ${i * 0.05}s`}>
+          <a
+            href={href}
+            class:list={['mobile-nav-link', { 'mobile-nav-link--active': isActive(href) }]}
+            aria-current={isActive(href) ? 'page' : undefined}
+          >
+            <span class="mobile-nav-link__text">{label}</span>
+            {isActive(href) && <span class="mobile-nav-link__dot" aria-hidden="true"></span>}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div class="mobile-drawer__footer">
+      <p>Andres Caicedo</p>
+      <p class="mobile-drawer__subtitle">DevOps & Platform Engineer</p>
+    </div>
+  </nav>
+</div>
 
 <!-- Header scroll-based shrink line -->
 <div class="header-progress" id="header-progress" aria-hidden="true"></div>
@@ -138,7 +140,6 @@ const isActive = (href: string) =>
     if (!btn) return;
     const dark = theme === 'dark';
     btn.setAttribute('aria-pressed',  String(dark));
-    btn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
     btn.classList.toggle('is-dark', dark);
   }
 
@@ -181,7 +182,6 @@ const isActive = (href: string) =>
 
     function setOpen(open: boolean) {
       toggleBtn.setAttribute('aria-expanded', String(open));
-      toggleBtn.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
       drawerEl.setAttribute('aria-hidden', String(!open));
       drawerEl.classList.toggle('is-open', open);
       toggleBtn.classList.toggle('is-active', open);
@@ -207,6 +207,12 @@ const isActive = (href: string) =>
 
     toggleBtn.addEventListener('click', () => {
       setOpen(toggleBtn.getAttribute('aria-expanded') !== 'true');
+    });
+
+    // Leaving the mobile layout while the menu is open would strand the page: the drawer
+    // hides (display: none) but the scroll lock and inert state stay. Close it instead.
+    window.matchMedia('(min-width: 769px)').addEventListener('change', (e) => {
+      if (e.matches && toggleBtn.getAttribute('aria-expanded') === 'true') setOpen(false);
     });
 
     // Close on backdrop click
@@ -314,6 +320,7 @@ const isActive = (href: string) =>
     gap: var(--space-3);
     text-decoration: none;
     flex-shrink: 0;
+    min-height: 2.75rem;
     transition: opacity var(--transition);
   }
   .site-logo:hover { opacity: 0.85; }
@@ -339,7 +346,7 @@ const isActive = (href: string) =>
     letter-spacing: -0.01em;
   }
   .site-logo__role {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     font-weight: 500;
     color: var(--color-text-muted);
     text-transform: uppercase;
@@ -471,7 +478,10 @@ const isActive = (href: string) =>
   /* ── Mobile drawer ── */
   .mobile-drawer {
     position: fixed;
-    inset: 0;
+    top: var(--header-height);
+    right: 0;
+    bottom: 0;
+    left: 0;
     z-index: 99;
     pointer-events: none;
     visibility: hidden;
@@ -501,7 +511,7 @@ const isActive = (href: string) =>
     height: 100%;
     background: var(--color-bg-alt);
     border-left: 1px solid var(--color-border);
-    padding: calc(var(--header-height) + var(--space-4)) var(--space-6) var(--space-6);
+    padding: var(--space-6);
     display: flex;
     flex-direction: column;
     transform: translateX(100%);
@@ -598,7 +608,7 @@ const isActive = (href: string) =>
   @media (max-width: 768px) {
     .nav-hamburger { display: flex; }
     .site-nav { display: none; }
-    .site-logo__text { display: none; }
+    .site-logo__role { display: none; }
   }
 
   @media (min-width: 769px) {

@@ -193,7 +193,7 @@ const coreStack = [
                </a>
 
                {project.relatedRepos?.length ? (
-                 <div class="project-card__repos" aria-label="Related repositories">
+                 <div class="project-card__repos">
                    <span class="project-card__repos-label">Related repositories</span>
                    <ul class="project-card__repos-list" role="list">
                      {project.relatedRepos.slice(0, 2).map((repo) => (
@@ -272,6 +272,7 @@ const coreStack = [
       <h2 id="cta-heading">Stay in the loop</h2>
       <p>Get notified about new posts and projects. No spam, unsubscribe anytime.</p>
       <form
+        id="newsletter-form"
         class="newsletter-form"
         action="https://formspree.io/f/xvzwwjeo"
         method="POST"
@@ -296,6 +297,7 @@ const coreStack = [
         <input type="hidden" name="_subject" value="New newsletter subscriber" />
         <input type="text"   name="_gotcha"  style="display:none" tabindex="-1" autocomplete="off" />
       </form>
+      <p class="newsletter-status" id="newsletter-status" role="status" aria-live="polite"></p>
       <p class="rss-hint">
         Or <a href="/rss.xml">subscribe via RSS</a>
       </p>
@@ -358,6 +360,41 @@ const coreStack = [
       deleting = true;
       tick();
     }, 2500);
+  });
+</script>
+
+<script>
+  // Newsletter: submit in place so the visitor sees the result on this page
+  const newsletter = document.getElementById('newsletter-form') as HTMLFormElement | null;
+  const newsletterStatus = document.getElementById('newsletter-status') as HTMLElement | null;
+
+  newsletter?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!newsletter.reportValidity()) return;
+
+    const submit = newsletter.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const setStatus = (text: string, state: '' | 'success' | 'error') => {
+      if (!newsletterStatus) return;
+      newsletterStatus.textContent = text;
+      newsletterStatus.className = state ? `newsletter-status newsletter-status--${state}` : 'newsletter-status';
+    };
+
+    if (submit) submit.disabled = true;
+    setStatus('Subscribing...', '');
+    try {
+      const res = await fetch(newsletter.action, {
+        method: 'POST',
+        body: new FormData(newsletter),
+        headers: { Accept: 'application/json' },
+      });
+      if (!res.ok) throw new Error('Could not subscribe.');
+      newsletter.reset();
+      setStatus('Thanks! You are on the list.', 'success');
+    } catch {
+      setStatus('Could not subscribe. Check your connection and try again.', 'error');
+    } finally {
+      if (submit) submit.disabled = false;
+    }
   });
 </script>
 
@@ -599,9 +636,20 @@ const coreStack = [
     line-height: 1.9;
   }
 
+  /* Terminal lines are plain text, not inline-code chips */
+  .hero-terminal__body code {
+    display: block;
+    background: none;
+    border: 0;
+    padding: 0;
+    font-size: inherit;
+    font-weight: 400;
+    color: inherit;
+  }
+
   .t-prompt { color: var(--color-success); font-weight: 600; }
   .t-cmd    { color: var(--color-brand); font-weight: 600; }
-  .t-flag   { color: var(--color-accent); }
+  .t-flag   { color: var(--color-accent-text); }
   .t-output { color: var(--color-text-muted); }
   .t-cursor {
     color: var(--color-brand);
@@ -694,13 +742,7 @@ const coreStack = [
     cursor: default;
     white-space: nowrap;
   }
-  .stack-chip:hover {
-    border-color: var(--color-brand);
-    background: var(--color-brand-light);
-    color: var(--color-brand);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-sm);
-  }
+  /* Stack chips are labels, not links: no hover affordance */
 
   .stack-chip__icon {
     width: 0.95rem;
@@ -728,6 +770,7 @@ const coreStack = [
     font-weight: 600;
     color: var(--color-brand);
     margin-top: var(--space-3);
+    padding-block: var(--space-2);
     transition: gap var(--transition);
   }
   .post-item__read-more:hover {
@@ -826,6 +869,14 @@ const coreStack = [
     opacity: 0.92;
     max-width: 60ch;
     margin-inline: auto;
+  }
+
+  .newsletter-status {
+    min-height: 1.25em;
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-on-brand);
   }
 
   @media (max-width: 1024px) {

@@ -89,6 +89,8 @@ const pageSchemaJson = JSON.stringify(pageSchemaGraph);
   <!-- ── Theme flash prevention — must run BEFORE any rendering ── -->
   <script is:inline>
     (function () {
+      // Lets CSS hide scroll-reveal content only when JavaScript can reveal it
+      document.documentElement.classList.add('js');
       var THEME_KEY = 'preferred-theme';
       var saved;
       try { saved = localStorage.getItem(THEME_KEY); } catch (_) {}
@@ -158,6 +160,9 @@ const pageSchemaJson = JSON.stringify(pageSchemaGraph);
   <!-- Global interactive behaviour -->
   <script>
     // ── Code copy buttons ────────────────────────────────────────────────────
+    const COPY_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+    const DONE_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
+
     document.querySelectorAll('pre').forEach((pre) => {
       const code = pre.querySelector('code');
       if (!code) return;
@@ -168,20 +173,37 @@ const pageSchemaJson = JSON.stringify(pageSchemaGraph);
       wrapper.appendChild(pre);
 
       const btn = document.createElement('button');
-      btn.className  = 'code-copy-btn';
-      btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy';
+      btn.type = 'button';
+      btn.className = 'code-copy-btn';
+      btn.innerHTML = `${COPY_ICON} Copy`;
       btn.setAttribute('aria-label', 'Copy code to clipboard');
       wrapper.appendChild(btn);
 
-      btn.addEventListener('click', () => {
-        navigator.clipboard.writeText(code.innerText).then(() => {
-          btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
-          btn.classList.add('code-copy-btn--copied');
-          setTimeout(() => {
-            btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy';
-            btn.classList.remove('code-copy-btn--copied');
-          }, 2000);
-        }).catch(() => { btn.textContent = 'Error'; });
+      // Announces the result; the visible label change alone is not heard by screen readers
+      const status = document.createElement('span');
+      status.className = 'sr-only';
+      status.setAttribute('role', 'status');
+      wrapper.appendChild(status);
+
+      const showResult = (label: string, icon: string, modifier: string, announcement: string) => {
+        btn.innerHTML = `${icon} ${label}`;
+        btn.classList.add(modifier);
+        status.textContent = announcement;
+        window.setTimeout(() => {
+          btn.innerHTML = `${COPY_ICON} Copy`;
+          btn.classList.remove(modifier);
+          status.textContent = '';
+        }, 2000);
+      };
+
+      btn.addEventListener('click', async () => {
+        try {
+          if (!navigator.clipboard) throw new Error('Clipboard API unavailable');
+          await navigator.clipboard.writeText(code.innerText);
+          showResult('Copied!', DONE_ICON, 'code-copy-btn--copied', 'Code copied to clipboard');
+        } catch {
+          showResult('Copy failed', COPY_ICON, 'code-copy-btn--error', 'Copy failed. Select the code and copy it manually.');
+        }
       });
     });
 

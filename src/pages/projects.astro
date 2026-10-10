@@ -5,6 +5,8 @@ import { featuredProjects, otherProjects } from '../data/projects';
 const categories = [...new Set([...featuredProjects, ...otherProjects].map(p => p.category))];
 const isExternalUrl = (url: string) => /^https?:\/\//.test(url);
 const isContactSubjectUrl = (url: string) => url.startsWith('/contact/?subject=');
+// The visible CTA text; the accessible name must contain it (WCAG 2.5.3)
+const ctaLabel = (url: string) => (isContactSubjectUrl(url) ? 'Discuss project' : 'View project');
 const projectPrimaryUrl = (project: { url: string; relatedRepos?: { url: string }[] }) =>
   project.relatedRepos?.[0]?.url ?? project.url;
 ---
@@ -34,7 +36,7 @@ const projectPrimaryUrl = (project: { url: string; relatedRepos?: { url: string 
         A collection of projects and implementation notes based on real workflows and
         operational problems I work on in practice.
       </p>
-      <div class="page-stats" aria-label="Project statistics">
+      <div class="page-stats" role="group" aria-label="Project statistics">
         <div class="stat">
           <span class="stat__number">{featuredProjects.length + otherProjects.length}</span>
           <span class="stat__label">Total Projects</span>
@@ -89,14 +91,14 @@ const projectPrimaryUrl = (project: { url: string; relatedRepos?: { url: string 
                 href={project.url}
                 target={isExternalUrl(project.url) ? '_blank' : undefined}
                 rel={isExternalUrl(project.url) ? 'noopener noreferrer' : undefined}
-                aria-label={isExternalUrl(project.url) ? `View ${project.title} (opens in new tab)` : `View ${project.title}`}
+                aria-label={`${ctaLabel(project.url)}: ${project.title}${isExternalUrl(project.url) ? ' (opens in new tab)' : ''}`}
               >
-                {isContactSubjectUrl(project.url) ? 'Discuss project' : 'View project'}
+                {ctaLabel(project.url)}
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
               </a>
 
               {project.relatedRepos?.length ? (
-                <div class="project-card__repos" aria-label="Related repositories">
+                <div class="project-card__repos">
                   <span class="project-card__repos-label">Related repositories</span>
                   <ul class="project-card__repos-list" role="list">
                     {project.relatedRepos.map((repo) => (
@@ -160,14 +162,14 @@ const projectPrimaryUrl = (project: { url: string; relatedRepos?: { url: string 
                 href={project.url}
                 target={isExternalUrl(project.url) ? '_blank' : undefined}
                 rel={isExternalUrl(project.url) ? 'noopener noreferrer' : undefined}
-                aria-label={isExternalUrl(project.url) ? `View ${project.title} (opens in new tab)` : `View ${project.title}`}
+                aria-label={`${ctaLabel(project.url)}: ${project.title}${isExternalUrl(project.url) ? ' (opens in new tab)' : ''}`}
               >
-                {isContactSubjectUrl(project.url) ? 'Discuss project' : 'View project'}
+                {ctaLabel(project.url)}
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
               </a>
 
               {project.relatedRepos?.length ? (
-                <div class="project-card__repos" aria-label="Related repositories">
+                <div class="project-card__repos">
                   <span class="project-card__repos-label">Related repositories</span>
                   <ul class="project-card__repos-list" role="list">
                     {project.relatedRepos.map((repo) => (
